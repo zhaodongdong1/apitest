@@ -1,0 +1,20 @@
+
+language: python
+sudo: false
+python:
+  - 3.6
+  - 3.7
+  - 3.8
+matrix:
+  include:
+    - python: 3.9
+      dist: xenial    # Required for Python 3.9
+      sudo: true    # Required for Python 3.9
+install:
+  - pip install poetry
+  - poetry install -vvv
+script:
+  - poetry run coverage run --source=apitest -m pytest -v
+  - poetry run coverage report -m
+after_success:
+  - poetry run coveralls
