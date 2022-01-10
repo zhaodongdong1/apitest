@@ -59,7 +59,9 @@ def test_httpbin_post():
         .set_data('abc = 123')\
         .run()\
         .validate("status_code",200)\
-        .validate("headers.Server","nginx")
+        .validate("headers.Server","nginx")\
+        .validate("json().msg","成功")\
+        .validate("json().data.fristLogin","False")
 
 
 '''def test_httpbin_post():
