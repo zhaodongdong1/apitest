@@ -5,3 +5,5 @@ def aa(bb):
     print (value)
 
 aa('123.22.11')
+
+print('{}'.format(123))

@@ -3,26 +3,9 @@ def test_version():
     assert isinstance(__version__,str)
 
 
-from Api import BaseApi
+from test.httpbin import *
 
-
-#继承base类
-class ApiHttpbintestget(BaseApi):
-    url = 'https://test-izubackground.izuche.com/izubackground/doLogin.json?username=zhaodongdong'
-    param = {"username":"zhaodongdong","password":"12345678","msgcode":"1234"}
-    method = 'GET'
-    headers = {"CONTENT-TYPE":"application/json"}
-    datas = 'abc = 1234'
-    json = {'abcd':456}
-
-class ApiHttpbintestpost(BaseApi):
-    url = 'https://test-izubackground.izuche.com/izubackground/doLogin.json?username=zhaodongdong'
-    param = {"username": "zhaodongdong", "password": "12345678", "msgcode": "1234"}
-    method = 'post'
-    headers = {"CONTENT-TYPE": "application/json"}
-    datas = 'abc = 1234'
-    json = {'abcd': 456}
-    """def set_params(self,**param):
+"""def set_params(self,**param):
         self.parames = param
         return self
 
@@ -42,28 +25,23 @@ class ApiHttpbintestpost(BaseApi):
         # return self 返回类的实例,多次调用则叠加
         return self"""
 
-def test_httpbin_get():
-    #a = ApiHttpbintestget().set_params(username="zhaodongdong",password=12345678,msgcode=1234)
-    #print(a)
+def test_httpbin_share():
+    abc = 123
+    nginx = 'nginx'
+    ApiHttpbintestget().set_params(password="12345678", msgcode="1234").set_json({'abcd': 456}) \
+        .set_data('abc = %s'%abc) \
+        .run() \
+        .validate("status_code", 200)
 
-    ApiHttpbintestget().set_params(password="12345678",msgcode="1234").set_json({'abcd': 456}) \
-        .set_data('abc = 123') \
-        .run()\
-        .validate("status_code",200)
-def test_httpbin_post():
-    #a = ApiHttpbintestget().set_params(username="zhaodongdong",password=12345678,msgcode=1234)
-    #print(a)
-
-
-    ApiHttpbintestpost().set_params(password="12345678",msgcode="1234")\
-        .set_data('abc = 123')\
-        .run()\
-        .validate("status_code",200)\
-        .validate("headers.Server","nginx")\
-        .validate("json().msg","成功")\
-        .validate("json().data.fristLogin","False")
-
-
+    #format(123):将123替换到前面{}中并且格式化输出,如果中括号有数字，则对应format中下标输出
+    false = 'false'
+    ApiHttpbintestpost().set_params(password="12345678", msgcode="1234") \
+        .set_data('abc = %s'%abc) \
+        .run() \
+        .validate("status_code", 200) \
+        .validate("headers.Server", "{}".format(nginx)) \
+        .validate("json().msg", "成功")
+        #.validate("json().data.fristLogin","false".format(false))
 '''def test_httpbin_post():
     host = 'http://test-izubackground.izuche.com/izubackground/doLogin.json'
     #endpoint = 'post'
