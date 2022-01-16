@@ -28,6 +28,7 @@ from test.httpbin import *
 def test_httpbin_share():
     abc = 123
     nginx = 'nginx'
+    #ApiHttpbintestget().set_params(password="12345678", msgcode="1234").set_json({'abcd': 456}) \
     ApiHttpbintestget().set_params(password="12345678", msgcode="1234").set_json({'abcd': 456}) \
         .set_data('abc = %s'%abc) \
         .run() \
@@ -40,8 +41,17 @@ def test_httpbin_share():
         .run() \
         .validate("status_code", 200) \
         .validate("headers.Server", "{}".format(nginx)) \
-        .validate("json().msg", "成功")
+        .validate("json().msg", "成功")\
+        .validate("json().code",0)
         #.validate("json().data.fristLogin","false".format(false))
+def purchase_wait_select():
+    #待采单查询
+    ApiHttpbintestpurchaswait()\
+        .set_params(ad=1234) \
+        .set_data("") \
+        .run() \
+        .validate("json().code",404)
+
 '''def test_httpbin_post():
     host = 'http://test-izubackground.izuche.com/izubackground/doLogin.json'
     #endpoint = 'post'
