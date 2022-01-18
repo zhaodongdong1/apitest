@@ -1,5 +1,5 @@
+from ApiTest import __version__
 def test_version():
-    from ApiTest import __version__
     assert isinstance(__version__,str)
 
 
@@ -35,22 +35,29 @@ def test_httpbin_share():
         .validate("status_code", 200)
 
     #format(123):将123替换到前面{}中并且格式化输出,如果中括号有数字，则对应format中下标输出
-    false = 'false'
     ApiHttpbintestpost().set_params(password="12345678", msgcode="1234") \
         .set_data('abc = %s'%abc) \
         .run() \
         .validate("status_code", 200) \
         .validate("headers.Server", "{}".format(nginx)) \
         .validate("json().msg", "成功")\
-        .validate("json().code",0)
-        #.validate("json().data.fristLogin","false".format(false))
-def purchase_wait_select():
-    #待采单查询
-    ApiHttpbintestpurchaswait()\
-        .set_params(ad=1234) \
-        .set_data("") \
+        .validate("json().code",0)\
+        #.validate("json().data.Authorization","02ffd3b514854d6e9725030f11e77cef".format(false))
+def test_purchase_wait_select():
+
+    ApiHttpbintestpost().set_params(password="12345678", msgcode="1234") \
+        .set_data('abc = 123') \
         .run() \
-        .validate("json().code",404)
+        .validate("status_code", 200) \
+        .validate("headers.Server", "nginx") \
+        .validate("json().msg", "成功") \
+        .validate("json().code", 0)\
+        .extract("json.data.Authorization")
+    #待采单查询
+
+    ApiHttpbintestpurchaswait()\
+        .run() \
+        .validate("json().code",401)
 
 '''def test_httpbin_post():
     host = 'http://test-izubackground.izuche.com/izubackground/doLogin.json'

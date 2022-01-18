@@ -12,13 +12,13 @@ class ApiHttpbintestpost(BaseApi):
     url = 'https://test-izubackground.izuche.com/izubackground/doLogin.json?username=zhaodongdong'
     #param = {"username": "zhaodongdong", "password": "12345678", "msgcode": "1234"}
     method = 'post'
-    headers = {"CONTENT-TYPE": "application/json"}
+    #headers = {"CONTENT-TYPE": "application/json"}
     #datas = 'abc = 1234'
     #json = {'abcd': 456}
 
 class ApiHttpbintestpurchaswait(BaseApi):
     url = 'https://test-izubackground.izuche.com/izubackground/api/purchase/getPurchaseWaitList.json'
-    #param = {"username": "zhaodongdong", "password": "12345678", "msgcode": "1234"}
+    #params = {}
     method = 'post'
     headers = {"CONTENT-TYPE": "application/json"}
-    #datas = 'purchaseStatus = 1'
+    #datas = ''
